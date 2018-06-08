@@ -1,0 +1,39 @@
+.countdown-unit {
+  margin-bottom: 0.2em;
+
+  &-number {
+    font-size: 2em;
+  }
+
+  &-type {
+    margin-left: 0.5em;
+  }
+}
+
+.countdown-end {
+  margin-top: 2em;
+
+  &-direction {
+    margin-bottom: 0.5em;
+  }
+
+  &-target {
+    font-size: 1.5em;
+  }
+}
+
+.countdown-link {
+  display: block;
+  margin-top: 1rem;
+
+  &::before {
+    content: '';
+    border: solid currentcolor;
+    border-width: 0.2em 0 0 0.2em;
+    display: inline-block;
+    height: 0.6em;
+    margin-right: 0.5em;
+    transform: rotate(-45deg);
+    width: 0.6em;
+  }
+}

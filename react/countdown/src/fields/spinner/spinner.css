@@ -1,0 +1,84 @@
+.spinner {
+  display: inline-block;
+  vertical-align: middle;
+  font-family: monospace;
+  user-select: none;
+  width: 5em;
+
+  &::before {
+    content: '';
+    border-left: 1px solid currentcolor;
+    color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    opacity: 0.2;
+  }
+
+  &:first-child::before {
+    content: none;
+  }
+
+  & input {
+    display: none;
+  }
+
+  &-options {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    height: 12em;
+    width: 100%;
+  }
+}
+
+.spinner-option {
+  display: block;
+  line-height: 1;
+  position: absolute;
+  left: 0;
+  opacity: 0.5;
+  width: 100%;
+  cursor: pointer;
+
+  &--selected {
+    opacity: 1;
+    font-size: 1.5em;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: default;
+  }
+
+  &--prev {
+    padding-top: 3em;
+    top: 0;
+  }
+
+  &--next {
+    bottom: 0;
+    padding-bottom: 3em;
+  }
+
+  &--prev::before,
+  &--next::before {
+    content: '';
+    border: 0 solid transparent;
+    border-width: 0 0.6em;
+    left: 50%;
+    margin-left: -0.6em;
+    position: absolute;
+    opacity: 0.2;
+  }
+
+  &--prev::before {
+    border-bottom: 0.8em solid currentcolor;
+    top: 1em;
+  }
+
+  &--next::before {
+    border-top: 0.8em solid currentcolor;
+    bottom: 1em;
+  }
+}

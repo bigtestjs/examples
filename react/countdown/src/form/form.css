@@ -1,0 +1,30 @@
+.date-form {
+  display: flex;
+}
+
+.date-form .date-form-hour::before {
+  color: white;
+  opacity: 0.1;
+}
+
+.date-form .date-form-year {
+  width: 6em;
+}
+
+.date-form-submit {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  left: 50%;
+  margin-top: 3em;
+  padding: 1em 2em;
+  position: absolute;
+  top: 100%;
+  transform: translateX(-50%);
+}
+
+.date-form-submit:hover {
+  background: rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 1);
+}
