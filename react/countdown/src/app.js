@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Router, Route, Switch } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
@@ -6,6 +6,7 @@ import createHistory from 'history/createBrowserHistory';
 import './app.css';
 import DateForm from './form';
 import Countdown from './countdown';
+import EmbedAddressBar from './embed-address-bar';
 
 export default class App extends Component {
   static propTypes = {
@@ -24,10 +25,15 @@ export default class App extends Component {
 
     return (
       <Router history={history}>
-        <Switch>
-          <Route path="/" exact component={DateForm} />
-          <Route path="/:date*" exact component={Countdown} />
-        </Switch>
+        <Fragment>
+          {/* this is strictly for demo purposes */}
+          <Route component={EmbedAddressBar} />
+
+          <Switch>
+            <Route path="/" exact component={DateForm} />
+            <Route path="/:date*" exact component={Countdown} />
+          </Switch>
+        </Fragment>
       </Router>
     );
   }
