@@ -6,16 +6,16 @@ import Spinner from './spinner';
 
 export default class HourField extends Component {
   static propTypes = {
-    value: PropTypes.number,
-    className: PropTypes.string,
-    onChange: PropTypes.func.isRequired
+    value: PropTypes.number
   };
 
   static defaultProps = {
+    // default value to the current hour
     value: moment().hour()
   };
 
-  get options() {
+  // hour options range from 00-23 and are generated with a loop
+  options = (() => {
     let options = [];
 
     for (let hour = 0; hour < 24; hour++) {
@@ -26,19 +26,13 @@ export default class HourField extends Component {
     }
 
     return options;
-  }
-
-  handleChange = hour => {
-    this.props.onChange(hour);
-  };
+  })();
 
   render() {
     return (
       <Spinner
         name="hour"
-        value={this.props.value}
-        className={this.props.className}
-        onChange={this.handleChange}
+        {...this.props}
         options={this.options}
         data-test-hour-field
       />

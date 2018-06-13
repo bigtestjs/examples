@@ -6,16 +6,16 @@ import Spinner from './spinner';
 
 export default class MinuteField extends Component {
   static propTypes = {
-    value: PropTypes.number,
-    className: PropTypes.string,
-    onChange: PropTypes.func.isRequired
+    value: PropTypes.number
   };
 
   static defaultProps = {
+    // default value to the current minute
     value: moment().minute()
   };
 
-  get options() {
+  // minute options range from 00-59 and are generated with a loop
+  options = (() => {
     let options = [];
 
     for (let min = 0; min < 60; min++) {
@@ -26,19 +26,13 @@ export default class MinuteField extends Component {
     }
 
     return options;
-  }
-
-  handleChange = minute => {
-    this.props.onChange(minute);
-  };
+  })();
 
   render() {
     return (
       <Spinner
         name="minute"
-        value={this.props.value}
-        className={this.props.className}
-        onChange={this.handleChange}
+        {...this.props}
         options={this.options}
         data-test-minute-field
       />

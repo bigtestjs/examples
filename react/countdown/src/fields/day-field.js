@@ -7,16 +7,17 @@ import Spinner from './spinner';
 export default class DayField extends Component {
   static propTypes = {
     value: PropTypes.number,
-    length: PropTypes.number,
-    className: PropTypes.string,
-    onChange: PropTypes.func.isRequired
+    length: PropTypes.number
   };
 
   static defaultProps = {
+    // default value to the current day of the month
     value: moment().date(),
+    // default length to the number of days in the current month
     length: moment().daysInMonth()
   };
 
+  // day options are dynamically generated up to the `length` prop
   get options() {
     let { length } = this.props;
     let options = [];
@@ -31,17 +32,14 @@ export default class DayField extends Component {
     return options;
   }
 
-  handleChange = day => {
-    this.props.onChange(day);
-  };
-
   render() {
+    // the spinner does not accept a length prop
+    let { length, ...props } = this.props;
+
     return (
       <Spinner
         name="day"
-        value={this.props.value}
-        className={this.props.className}
-        onChange={this.handleChange}
+        {...props}
         options={this.options}
         data-test-day-field
       />

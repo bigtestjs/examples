@@ -9,10 +9,13 @@ import Countdown from './countdown';
 
 export default class App extends Component {
   static propTypes = {
+    // this is defined as a prop with a default value so we can use a
+    // memory-based history object in our tests
     history: PropTypes.object
   };
 
   static defaultProps = {
+    // the default history is a browser history object
     history: createHistory()
   };
 

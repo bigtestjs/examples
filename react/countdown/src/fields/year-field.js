@@ -6,16 +6,16 @@ import Spinner from './spinner';
 
 export default class YearField extends Component {
   static propTypes = {
-    value: PropTypes.number,
-    className: PropTypes.string,
-    onChange: PropTypes.func.isRequired
+    value: PropTypes.number
   };
 
   static defaultProps = {
+    // default value to the current year
     value: moment().year()
   };
 
-  get options() {
+  // year options range from 1000-9999 and are generated with a loop
+  options = (() => {
     let options = [];
 
     for (let y = 1000; y <= 9999; y++) {
@@ -23,19 +23,13 @@ export default class YearField extends Component {
     }
 
     return options;
-  }
-
-  handleChange = year => {
-    this.props.onChange(year);
-  };
+  })();
 
   render() {
     return (
       <Spinner
         name="year"
-        value={this.props.value}
-        className={this.props.className}
-        onChange={this.handleChange}
+        {...this.props}
         options={this.options}
         data-test-year-field
       />
