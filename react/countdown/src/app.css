@@ -10,8 +10,17 @@
 body, html {
   height: 100%;
   font-family: monospace;
+  font-size: 15px;
   background: #222226;
   color: white;
+
+  @media screen and (max-width: 800px) {
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+  }
 }
 
 :global(#root) {

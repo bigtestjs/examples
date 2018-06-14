@@ -48,6 +48,7 @@ module.exports = (env = {}) => ({
       template: require('html-webpack-template'),
       appMountId: 'root',
       baseHref: '/',
+      mobile: true,
       // for surge.sh in production
       filename: env.production ? '200.html' : 'index.html'
     }),
