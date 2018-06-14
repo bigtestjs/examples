@@ -91,26 +91,33 @@ export default class Spinner extends Component {
   // <down> triggers `this.prev`
   // <enter> triggers `onEnter` prop
   // <backspace> clears the current query
-  handleKeyDown = ({ key }) => {
+  handleKeyDown = e => {
     let { onEnter } = this.props;
 
-    if (key === 'ArrowUp') {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
       this.prev();
-    } else if (key === 'ArrowDown') {
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
       this.next();
-    } else if (key === 'Enter' && onEnter) {
+    } else if (e.key === 'Enter' && onEnter) {
+      e.preventDefault();
       onEnter();
-    } else if (key === 'Backspace') {
-      this._query = '';
+    } else if (e.key === 'Backspace') {
+      e.preventDefault();
       clearTimeout(this._queryTimeout);
+      this._query = '';
     }
   };
 
   // if any single character key is pressed, add it to the current
   // query and select an option matching said query
-  handleKeyPress = ({ key }) => {
-    if (/^.$/.test(key)) {
-      this._query += key;
+  handleKeyPress = e => {
+    if (/^.$/.test(e.key)) {
+      e.preventDefault();
+
+      // add to the current query
+      this._query += e.key;
 
       // after one second, the query is cleared
       this._queryTimeout = setTimeout(() => {
