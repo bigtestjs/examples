@@ -6,15 +6,15 @@ import Spinner from './spinner';
 
 export default class MonthField extends Component {
   static propTypes = {
-    value: PropTypes.number,
-    className: PropTypes.string,
-    onChange: PropTypes.func.isRequired
+    value: PropTypes.number
   };
 
   static defaultProps = {
+    // default value to the current month
     value: moment().month()
   };
 
+  // months are zero indexed
   options = [
     { label: 'Jan', value: 0 },
     { label: 'Feb', value: 1 },
@@ -30,17 +30,11 @@ export default class MonthField extends Component {
     { label: 'Dec', value: 11 }
   ];
 
-  handleChange = month => {
-    this.props.onChange(month);
-  };
-
   render() {
     return (
       <Spinner
         name="month"
-        value={this.props.value}
-        className={this.props.className}
-        onChange={this.handleChange}
+        {...this.props}
         options={this.options}
         data-test-month-field
       />

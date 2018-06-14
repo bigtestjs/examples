@@ -48,12 +48,16 @@ module.exports = (env = {}) => ({
       template: require('html-webpack-template'),
       appMountId: 'root',
       baseHref: '/',
+      // for surge.sh in production
+      filename: env.production ? '200.html' : 'index.html'
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'
     })
   ],
+
+  stats: 'minimal',
 
   serve: {
     dev: { logLevel: 'warn' },

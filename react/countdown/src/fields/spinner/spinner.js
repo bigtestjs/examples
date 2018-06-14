@@ -28,18 +28,21 @@ export default class Spinner extends Component {
       PropTypes.bool
     ]).isRequired,
     onChange: PropTypes.func,
+    onEnter: PropTypes.func,
     className: PropTypes.string
   };
 
-  // used for typeahead
+  // used for the typeahead feature
   _query = '';
 
+  // on unmount, clear any pending timeouts
   componentWillUnmount() {
     if (this._queryTimeout) {
       clearTimeout(this._queryTimeout);
     }
   }
 
+  // computed index based on the current value and options
   get selectedIndex() {
     let { options, value: selected } = this.props;
 
@@ -47,9 +50,12 @@ export default class Spinner extends Component {
       return value === selected;
     });
 
+    // default to the first option
     return Math.max(selectedIndex, 0);
   }
 
+  // triggers `onChange` with the previous option and wraps around to the
+  // last option if there is no previous option
   prev = () => {
     let { options, onChange } = this.props;
     let prevIndex = this.selectedIndex - 1;
@@ -58,6 +64,8 @@ export default class Spinner extends Component {
     onChange(value);
   };
 
+  // triggers `onChange` with the next option and wraps around to the
+  // first option if there is no next option
   next = () => {
     let { options, onChange } = this.props;
     let nextIndex = this.selectedIndex + 1;
@@ -66,6 +74,8 @@ export default class Spinner extends Component {
     onChange(value);
   };
 
+  // triggers `onChange` with the option whose label matches the
+  // provided query from the start of the string (case insensitive)
   select = query => {
     let { options, onChange } = this.props;
     let regexp = new RegExp(`^${query}`, 'i');
@@ -77,21 +87,32 @@ export default class Spinner extends Component {
     }
   };
 
+  // <up> triggers `this.prev`
+  // <down> triggers `this.prev`
+  // <enter> triggers `onEnter` prop
+  // <backspace> clears the current query
   handleKeyDown = ({ key }) => {
+    let { onEnter } = this.props;
+
     if (key === 'ArrowUp') {
       this.prev();
     } else if (key === 'ArrowDown') {
       this.next();
+    } else if (key === 'Enter' && onEnter) {
+      onEnter();
     } else if (key === 'Backspace') {
       this._query = '';
       clearTimeout(this._queryTimeout);
     }
   };
 
+  // if any single character key is pressed, add it to the current
+  // query and select an option matching said query
   handleKeyPress = ({ key }) => {
-    if (/^\S$/.test(key)) {
+    if (/^.$/.test(key)) {
       this._query += key;
 
+      // after one second, the query is cleared
       this._queryTimeout = setTimeout(() => {
         this._query = '';
       }, 1000);
@@ -104,6 +125,8 @@ export default class Spinner extends Component {
     let { name, options, value, className, onChange, ...props } = this.props;
     let selectedIndex = this.selectedIndex;
 
+    // we only need to display the previous, current, and next
+    // options; wrapped around to the last or first option
     let visibleOptions = [
       options[selectedIndex - 1] || options[options.length - 1],
       options[selectedIndex],
@@ -124,12 +147,18 @@ export default class Spinner extends Component {
           {visibleOptions.map(({ label, value }, i) => (
             <div
               key={value}
-              onClick={i < 1 ? this.prev : i > 1 ? this.next : null}
+              // the selected index is always `1`, so the previous
+              // index is less than `1` (`0`), and the next index is
+              // greater than `1` (`2`)
               className={cx('spinner-option', {
                 'spinner-option--selected': i === 1,
                 'spinner-option--prev': i < 1,
                 'spinner-option--next': i > 1
               })}
+              // previous and next options are clickable
+              onClick={i < 1 ? this.prev : i > 1 ? this.next : null}
+              // testing attribute for each option type
+              data-test-spinner-option={i < 1 ? 'prev' : i > 1 ? 'next' : 'selected'}
             >
               {label}
             </div>

@@ -17,22 +17,46 @@ export default class Countdown extends Component {
     })
   };
 
+  // the moment date derived from the URL params
+  date = moment(this.props.match.params.date, 'YYYY/MM/DD/HH:mm');
+  // initial duration from the date
+  state = { duration: moment.duration(this.date.diff()) };
+
+  // on mount, we start re-rendering every tick to constantly keep the
+  // rendered duration in sync with the real duration in time
   componentDidMount() {
     this.tick();
   }
 
+  // on unmount, we need to cancel the animation loop
   componentWillUnmount() {
     cancelAnimationFrame(this._loop);
   }
 
+  // when the date change in the url, the date needs to be reset; the
+  // duration will update during the next tick
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.date !== prevProps.match.params.date) {
+      this.date = moment(this.props.match.params.date, 'YYYY/MM/DD/HH:mm');
+    }
+  }
+
+  // the `tick` updates the duration and cuases a re-render, then
+  // schedules another tick to re-render again during the next
+  // animation frame
   tick = () => {
-    this.forceUpdate(() => {
+    this.setState(() => ({
+      duration: moment.duration(this.date.diff())
+    }), () => {
       this._loop = requestAnimationFrame(this.tick);
     });
   };
 
-  renderUnit(duration, type) {
-    let units = Math.abs(duration.get(type));
+  // renders the specific unit type (year, month, day, etc.) using the
+  // current duration, and pads seconds and milliseconds to two and
+  // three digits respectively
+  renderUnit(type) {
+    let units = Math.abs(this.state.duration.get(type));
 
     if (type === 'seconds') {
       units = units.toString().padStart(2, '0');
@@ -58,40 +82,40 @@ export default class Countdown extends Component {
   }
 
   render() {
-    let { match: { params } } = this.props;
-    let date = moment(params.date, 'YYYY/MM/DD/HH:mm');
-    let duration = moment.duration(date.diff());
-
     return (
       <div
         className={cx('countdown')}
         data-test-countdown
       >
-        {this.renderUnit(duration, 'years')}
-        {this.renderUnit(duration, 'months')}
-        {this.renderUnit(duration, 'days')}
-        {this.renderUnit(duration, 'hours')}
-        {this.renderUnit(duration, 'minutes')}
-        {this.renderUnit(duration, 'seconds')}
-        {this.renderUnit(duration, 'milliseconds')}
 
+        {/* render relevant units */}
+        {this.renderUnit('years')}
+        {this.renderUnit('months')}
+        {this.renderUnit('days')}
+        {this.renderUnit('hours')}
+        {this.renderUnit('minutes')}
+        {this.renderUnit('seconds')}
+        {this.renderUnit('milliseconds')}
+
+        {/* show the target date and direction of time */}
         <div className={cx('countdown-end')}>
           <div
             className={cx('countdown-end-direction')}
             data-test-countdown-direction
           >
-            {date.isAfter() ? 'Until' : 'Since'}
+            {this.date.isAfter() ? 'Until' : 'Since'}
           </div>
           <div
             className={cx('countdown-end-target')}
             data-test-countdown-target
           >
-            {date.format('HH:mm') === '00:00'
-              ? date.format('MMMM D, YYYY')
-              : date.format('MMMM D, YYYY @ HH:mm')}
+            {this.date.format('HH:mm') === '00:00'
+              ? this.date.format('MMMM D, YYYY')
+              : this.date.format('MMMM D, YYYY @ HH:mm')}
           </div>
         </div>
 
+        {/* link back to the date form */}
         <Link to="/" className={cx('countdown-link')}>
           New Countdown
         </Link>

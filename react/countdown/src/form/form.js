@@ -18,10 +18,15 @@ export default class DateForm extends Component {
   };
 
   state = {
+    // the intial date is today's date; we also don't care about
+    // seconds or milliseconds for date input
     date: moment()
       .second(0)
       .millisecond(0)
   };
+
+  // the following `set*` functions clone the date object because by
+  // default, moment is mutable
 
   setYear = year => {
     this.setState(({ date }) => ({
@@ -53,12 +58,14 @@ export default class DateForm extends Component {
     }));
   };
 
+  // on submit, we simply push the date to the URL
   submit = event => {
     let { history } = this.props;
     let { date } = this.state;
 
     event.preventDefault();
 
+    // if there is no time specified, it isn't necessary
     if (date.format('HH:mm') === '00:00') {
       history.push(`/${date.format('YYYY/MM/DD')}`);
     } else {
@@ -75,7 +82,10 @@ export default class DateForm extends Component {
         className={cx('date-form')}
         onSubmit={this.submit}
       >
-        <MonthField value={date.month()} onChange={this.setMonth} />
+        <MonthField
+          value={date.month()}
+          onChange={this.setMonth}
+        />
 
         <DayField
           value={date.date()}
@@ -95,7 +105,10 @@ export default class DateForm extends Component {
           onChange={this.setHour}
         />
 
-        <MinuteField value={date.minute()} onChange={this.setMinute} />
+        <MinuteField
+          value={date.minute()}
+          onChange={this.setMinute}
+        />
 
         <button type="submit" className={cx('date-form-submit')}>
           Get {date.isAfter() ? 'Countdown' : 'Elapsed'}
