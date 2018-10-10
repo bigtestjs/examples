@@ -1,0 +1,3 @@
+--serve "webpack-serve --config ./webpack.config.js"
+--serve-url "http://localhost:8080"
+--adapter mocha

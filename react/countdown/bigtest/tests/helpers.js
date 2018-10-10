@@ -1,7 +1,7 @@
 import { before, beforeEach } from '@bigtest/mocha';
 import { setupAppForTesting } from '@bigtest/react';
 import { freeze } from 'timekeeper';
-import App from '../src/app';
+import App from '../../src/app';
 
 export { visit, location } from '@bigtest/react';
 

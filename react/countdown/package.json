@@ -6,7 +6,7 @@
     "build": "webpack --config ./webpack.config.js --env.production",
     "deploy": "surge ./dist https://bigtestjs-counter.surge.sh",
     "start": "webpack-serve --config ./webpack.config.js --development",
-    "test": "bigtest run --serve 'webpack-serve --config ./webpack.config.js' --serve-url 'http://localhost:8080' --adapter mocha"
+    "test": "bigtest run"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.0",

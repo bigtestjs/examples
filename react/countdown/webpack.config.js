@@ -10,7 +10,7 @@ const isTesting = process.env.NODE_ENV === 'testing';
 module.exports = (env = {}) => ({
   mode: isTesting ? 'none' : env.production ? 'production' : 'development',
 
-  entry: isTesting ? './tests/index.js' : './src/index.js',
+  entry: isTesting ? './bigtest/index.js' : './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js'
