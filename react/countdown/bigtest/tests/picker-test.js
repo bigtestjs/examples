@@ -2,7 +2,7 @@ import { describe, beforeEach, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
 import { setupApplicationForTesting, location } from './helpers';
-import DateFormInteractor from './interactors/form';
+import DateFormInteractor from '../interactors/form';
 
 describe('Date Picker', () => {
   const form = new DateFormInteractor();
