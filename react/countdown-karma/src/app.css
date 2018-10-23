@@ -1,0 +1,49 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+body, html {
+  height: 100%;
+  font-family: monospace;
+  font-size: 15px;
+  background: #222226;
+  color: white;
+
+  @media screen and (max-width: 800px) {
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+  }
+}
+
+:global(#root) {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  appearance: none;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: 1;
+}
+
+a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.2);
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
