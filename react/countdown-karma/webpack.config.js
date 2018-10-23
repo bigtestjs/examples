@@ -5,12 +5,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const convert = require('koa-connect');
 const history = require('connect-history-api-fallback');
 
-const isTesting = process.env.NODE_ENV === 'testing';
-
 module.exports = (env = {}) => ({
-  mode: isTesting ? 'none' : env.production ? 'production' : 'development',
+  mode: env.production ? 'production' : 'development',
 
-  entry: isTesting ? './bigtest/index.js' : './src/index.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js'
