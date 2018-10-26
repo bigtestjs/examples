@@ -1,0 +1,32 @@
+---
+language: node_js
+node_js:
+  - "6"
+
+sudo: false
+dist: trusty
+
+addons:
+  chrome: stable
+
+cache:
+  yarn: true
+
+env:
+  global:
+    # See https://git.io/vdao3 for details.
+    - JOBS=1
+    - PERCY_PARALLEL_NONCE=\$TRAVIS_BUILD_NUMBER
+  matrix:
+    - PARTITION=1
+    - PARTITION=2
+
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+
+install:
+  - yarn install --non-interactive
+
+script:
+  - yarn exam --split=2 --partition=$PARTITION --parallel
