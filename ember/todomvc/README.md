@@ -1,4 +1,4 @@
-# todomvc [![CircleCI](https://circleci.com/gh/Robdel12/ember-todomvc.svg?style=svg&circle-token=bfc7ca82591901e0038893a944b36f06b88b8922)](https://circleci.com/gh/Robdel12/ember-todomvc) [![Build Status](https://travis-ci.org/Robdel12/ember-todomvc.svg?branch=master)](https://travis-ci.org/Robdel12/ember-todomvc)
+# todomvc
 
 This app is an example for using Ember, Ember Exam, Percy, and
 `@bigtest/interactor` together to write acceptance tests.
