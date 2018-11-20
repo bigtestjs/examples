@@ -6,7 +6,8 @@
     "build": "webpack --config ./webpack.config.js --env.production",
     "deploy": "surge ./dist https://bigtestjs-counter.surge.sh",
     "start": "webpack-serve --config ./webpack.config.js --development",
-    "test": "karma start"
+    "test": "karma start",
+    "test:percy": "percy exec -- karma start --singleRun"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.0",
@@ -35,6 +36,7 @@
     "mini-css-extract-plugin": "^0.4.0",
     "mocha": "^5.2.0",
     "moment": "2.22.1",
+    "percy-interactor": "^0.1.0",
     "postcss-loader": "^2.1.5",
     "precss": "3.1.2",
     "prop-types": "15.6.1",

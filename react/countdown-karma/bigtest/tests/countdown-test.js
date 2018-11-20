@@ -23,6 +23,18 @@ describe('Countdown', () => {
     });
   });
 
+  describe('taking a snapshot', () => {
+    beforeEach(async () => {
+      visit('/2019/1/2');
+      await countdown.snapshot('Countdown App');
+    });
+
+    it('takes a snapshot', () => {
+      expect(countdown.isPresent).to.equal(true);
+    });
+  });
+
+
   describe('with a date in the past', () => {
     beforeEach(() => {
       travel(new Date([2018, 1, 2]));

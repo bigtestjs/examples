@@ -1,5 +1,6 @@
 import { interactor, scoped } from '@bigtest/interactor';
 import SpinnerInteractor from './spinner';
+import snapshottable from 'percy-interactor';
 
 export default @interactor class DateFormInteractor {
   // the default scope allows us to omit the selector when calling `new`
@@ -13,6 +14,8 @@ export default @interactor class DateFormInteractor {
   hour = scoped('[data-test-hour-field]', SpinnerInteractor);
   minute = scoped('[data-test-minute-field]', SpinnerInteractor);
   submit = scoped('button[type="submit"]');
+
+  snapshot = snapshottable();
 
   // getters can also be used for computed properties
   get value() {

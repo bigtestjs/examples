@@ -26,7 +26,7 @@ describe('Date Picker', () => {
 
   describe('selecting a date in the future', () => {
     beforeEach(async () => {
-      await form.year.next();
+      await form.year.next().snapshot('Get countdown button');
     });
 
     it('displays a "get countdown" submit button', () => {
@@ -36,7 +36,7 @@ describe('Date Picker', () => {
 
   describe('selecting a date in the past', () => {
     beforeEach(async () => {
-      await form.year.prev();
+      await form.year.prev().snapshot('Get Elapsed button');
     });
 
     it('displays a "get elapsed" submit button', () => {
@@ -62,6 +62,7 @@ describe('Date Picker', () => {
         .minute.select('30')
         .submit.click();
     });
+
 
     it('includes the time in the URL', () => {
       expect(location().pathname).to.equal('/2019/01/01/12:30');
