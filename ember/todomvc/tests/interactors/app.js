@@ -1,4 +1,3 @@
-import { when } from "@bigtest/convergence";
 import {
   is,
   text,
@@ -40,12 +39,14 @@ class TodoMVC {
     keyCode: 13
   });
 
-  async createTwoTodos() {
-    await this.newTodo("My First Todo").submitTodo();
-    await when(() => this.todoList(0).isPresent);
-
-    await this.newTodo("My Second Todo").submitTodo();
-    await when(() => this.todoList(1).isPresent);
+  createTwoTodos() {
+    return this
+      .newTodo("My First Todo")
+      .submitTodo()
+      .when(() => this.todoList(0).isPresent)
+      .newTodo("My Second Todo")
+      .submitTodo()
+      .when(() => this.todoList(1).isPresent);
   }
 }
 
