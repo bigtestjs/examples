@@ -18,7 +18,6 @@
     "exam": "ember exam"
   },
   "devDependencies": {
-    "@bigtest/convergence": "^1.0.0",
     "@bigtest/interactor": "^0.7.2",
     "@ember-decorators/babel-transforms": "^2.0.0",
     "babel-eslint": "^8.0.0",
